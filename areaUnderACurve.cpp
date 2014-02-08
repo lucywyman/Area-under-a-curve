@@ -1,6 +1,7 @@
 #include<cmath>
 #include<iostream>
 #include<string>
+#include<cstdlib>
 using namespace std;
 
 
@@ -49,12 +50,12 @@ float trapezoidArea(float (*function)(float), float a, float b, float width){
     float fxb;
     float area;
     double total;
-    for (float j = a; j<b; j+=width){
-	fxa = (*function)(j);
-	fxb = (*function)(j+width);
-	area = ((fxa+fxb)/2)*width;
-	total = total+area;
-    }
+	for (float j = a; j<b; j+=width){
+	    fxa = (*function)(j);
+	    fxb = (*function)(j+width);
+	    area = ((fxa+fxb)/2)*width;
+	    total = total+area;
+	}
     cout<<total<<endl;
     return total;
 }
@@ -68,8 +69,12 @@ double methods(float(*funct)(float), float a, float b, float width, string type)
     else if (type == "trapezoid" || type == "Trapezoid" || type == "trapezoidal" || type == "Trapezoidal"){
 	sum = trapezoidArea(funct, a, b, width);
     }
+    else if (type =="both" || type=="Both"){
+    	sum = rectangleArea(funct, a, b, width);
+	float sum1 = trapezoidArea(funct, a, b, width);
+    }
     else{
-	cout<< "You did not enter a valid method!  Please try again"<<endl;
+	cout<< "\033[1;31mYou did not enter a valid method!  Please try again\33[0m"<<endl;
 	sum = 0;
     }
     return sum;
@@ -77,46 +82,68 @@ double methods(float(*funct)(float), float a, float b, float width, string type)
 
 /*Wooo, we made it!  Int main will get all the user input, then use a series of if statements to determine where pointers will point to in order to get evaluate the area under the curve*/
 int main(){
-    /*Initializing variables*/
-    float n;
-    string type;
-    float a;
-    float b;
-    int funct;
-    float width;
-    string play = "Yes";
-    /*While loop so that user can start over*/
-    while (play == "Yes" || play == "yes"){
-	cout<<"How accurate do you want your integral (the area under the curve) to be?  Please enter a number from 1-100, with 100 being the most accurate:  ";
-	cin>>n; /*This will be the number of rectangles/trapezoids the area under the curve will be broken up doubleo*/
-	cout<<"Would you like to use the trapezoidal method or rectangular method to find the integral (trapezoidal will be more accurate)?  ";
-	cin>>type; 
-	cout<<"What are the beginning and ending values of your integral?  Please enter the beginning number first, and the end number second: ";
-	cout<<endl;
-	cin>>a; /*Starting point*/
-	cin>>b; /*Ending point*/
-	width = ((b-a)/n); /*width of rectangle/trapezoids used to find area*/
-	cout<<"Please select a function from those provided! Enter a \n 1 for y=(2x^5)+(x^3)-10x+2\n 2 for y=(6x^2)-x+10\n 3 for y=5x+3 \n 4 for y=(2x^3)+120\n 5 for y=2x^2  ";
-	cout<<endl;
-	cin>>funct;
-	/*All the if statements*/
-	if (funct == 1){
-	    double answer = methods(&f1, a, b, width, type);
+    string play = "yes";
+    /*Nested while loop so user can start over"*/
+    while (play == "yes" || play == "Yes"){
+	while(1){
+	    /*Initializing variables*/
+	    float n;
+	    string type;
+	    float a;
+	    float b;
+	    int funct;
+	    float width;
+	    cout<<"\033[1;34mHow accurate do you want your integral (the area under the curve) to be?  Please enter a number from 1-1000, with 1000 being the most accurate:\33[0m ";
+	    cin>>n;
+	    if (n>1000 || n<0 || cin.fail()){
+		cin.clear();
+		cin.ignore();
+		cout<<endl<<"\033[1;31mSorry! You did not input a number between 1 and 1000.  Please try again!\033[0m\n"<<endl;
+		break;
+	    }	/*This will be the number of rectangles/trapezoids the area under the curve will be broken up doubleo*/
+	    cout<<"\033[1;34mWould you like to use the trapezoidal method, rectangular method, or both to find the integral? (trapezoidal will be more accurate)\33[0m ";
+	    cin>>type;
+	    if (cin.fail()){
+	    	cin.clear();
+		cin.ignore();
+		cout<<endl<<"\033[1;31Sorry! You did not input a valid method.  Please try again!\33[0m"<<endl;
+		break;
+	    }
+	    cout<<"\033[1;34mWhat are the beginning and ending values of your integral?  Please enter the beginning number first, and the end number second:\33[0m ";
+	    cout<<endl;
+	    cin>>a; /*Starting point*/
+	    cin>>b; /*Ending point*/
+	    if (a>1000 || b>1001 || cin.fail()){
+		cin.clear();
+		cin.ignore();
+		cout<<"\033[1;31mSorry! The number you input is too high or too low.  Please select a number between 0 and 4000\033[0m"<<endl;
+		break;
+	    }
+	    width = ((b-a)/n); /*width of rectangle/trapezoids used to find area*/
+	    cout<<"\033[1;34mPlease select a function from those provided! Enter a\33[0m\n \033[1;35m1 for y=(2x^5)+(x^3)-10x+2\n 2 for y=(6x^2)-x+10\n 3 for y=5x+3 \n 4 for y=(2x^3)+120\n 5 for y=2x^2\33[0m\n ";
+	    cin>>funct;
+	    /*All the if statements*/
+	    if (funct == 1){
+		double answer = methods(&f1, a, b, width, type);
+	    }	
+	    if (funct == 2){
+		double answer = methods(&f2, a, b, width, type);
+	    }
+	    if (funct == 3){
+		double answer = methods(&f3, a, b, width, type);
+	    }
+	    if (funct == 4){
+		double answer = methods(&f4, a, b, width, type);
+	    }
+	    if (funct == 5){
+		double answer = methods(&f5, a, b, width, type);
+	    }
+	    cout<<"\033[1;34mWould you like to play again? Yes/no\33[0m  "<<endl;
+	    cin>>play;
+	    if (play != "yes" && play !="Yes"){
+	    	break;
+	    }
 	}	
-	if (funct == 2){
-	    double answer = methods(&f2, a, b, width, type);
-	}
-	if (funct == 3){
-	    double answer = methods(&f3, a, b, width, type);
-	}
-	if (funct == 4){
-	    double answer = methods(&f4, a, b, width, type);
-	}
-	if (funct == 5){
-	    double answer = methods(&f5, a, b, width, type);
-	}
-	cout<<"Would you like to play again? Yes/no  "<<endl;
-	cin>>play;
-    }	
+    }
     return 0;
 }
