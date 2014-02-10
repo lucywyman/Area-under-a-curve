@@ -97,7 +97,7 @@ int main(){
 	    cin>>n;
 	    if (n>1000 || n<0 || cin.fail()){
 		cin.clear();
-		cin.ignore();
+		cin.ignore(10000, '\n');
 		cout<<endl<<"\033[1;31mSorry! You did not input a number between 1 and 1000.  Please try again!\033[0m\n"<<endl;
 		break;
 	    }	/*This will be the number of rectangles/trapezoids the area under the curve will be broken up doubleo*/
@@ -105,7 +105,7 @@ int main(){
 	    cin>>type;
 	    if (cin.fail()){
 	    	cin.clear();
-		cin.ignore();
+		cin.ignore(1000, '\n');
 		cout<<endl<<"\033[1;31Sorry! You did not input a valid method.  Please try again!\33[0m"<<endl;
 		break;
 	    }
@@ -115,7 +115,7 @@ int main(){
 	    cin>>b; /*Ending point*/
 	    if (a>1000 || b>1001 || cin.fail()){
 		cin.clear();
-		cin.ignore();
+		cin.ignore(10000, '\n');
 		cout<<"\033[1;31mSorry! The number you input is too high or too low.  Please select a number between 0 and 4000\033[0m"<<endl;
 		break;
 	    }
