@@ -1,3 +1,12 @@
+/********************************************************************
+*Program filename: areaUnderACurve.cpp
+*Author: Lucy Wyman
+*Date: February 9, 2014
+*Description: Calculate the area under a chosen curve between two user-inputted points
+*Input: Beginning and ending points, number of rectangles or trapezoids used, method of Riemann sum, and equation to be used
+*Output: Area under a curve between two points
+*********************************************************************/
+
 #include<cmath>
 #include<iostream>
 #include<string>
@@ -6,6 +15,13 @@ using namespace std;
 
 
 /*Define functions that will be used for integrals*/
+/*********************************************************************
+**Function: f1, f2, f3, f4, f5
+** Description: Given functions which can be chosen to find the area under.  y=mx+b format.
+** Parameters: Float x
+** Pre-Conditions: X must be a float
+** Post-Conditions: Return value of y for given x.
+********************************************************************/ 
 float f1(float x){
     float y = 2*(pow(x,5))+(pow(x,3))-(10*x)+2;
     return y;
@@ -32,6 +48,14 @@ float f5(float x){
 }
 
 /*Define functions for finding area through rectangular and trapezoidal methods.  These functions will be passed a pointer to the chosen function, the start point, the end point, and the width, and use those to find the totalarea under the function*/
+
+/*********************************************************************
+**Function: Rectangle Area and Trapezoid Area
+** Description: Use either trapezoids or rectangles to find the area under a curve using Riemann sums. 
+** Parameters: Function being used, starting point, ending point, and width of each rectangle/trapezoid
+** Pre-Conditions: All parameters are floats and need a value
+** Post-Conditions: Return double total, also cout it to terminal
+*********************************************************************/ 
 float rectangleArea(float(*function)(float), float a, float b, float width){
     float fx;
     float area;
@@ -61,8 +85,16 @@ float trapezoidArea(float (*function)(float), float a, float b, float width){
 }
 
 /*This function is passed all the same variables as well as the method of integrating that the user chose.  This is where the above functions are run, and the sum is returned*/
+
+/*********************************************************************
+**Function:  Run rectangle, trapezoid, or both functions with inputed variables 
+** Description: Legitimately just passing all variables to the right functions according to user input
+** Parameters: Function, start point, end point, width of rectangle/trapezoid, and which method user wants to use
+** Pre-Conditions: All parameters must be floats except for type which is a string.
+** Post-Conditions: return double sum
+*********************************************************************/ 
 double methods(float(*funct)(float), float a, float b, float width, string type){
-    float sum;
+    double sum;
     if (type == "rectangular" || type == "Rectangular" || type == "rectangle" || type == "Rectangle"){
 	sum = rectangleArea(funct, a, b, width);
     }
@@ -71,7 +103,7 @@ double methods(float(*funct)(float), float a, float b, float width, string type)
     }
     else if (type =="both" || type=="Both"){
     	sum = rectangleArea(funct, a, b, width);
-	float sum1 = trapezoidArea(funct, a, b, width);
+	double sum1 = trapezoidArea(funct, a, b, width);
     }
     else{
 	cout<< "\033[1;31mYou did not enter a valid method!  Please try again\33[0m"<<endl;
@@ -81,6 +113,14 @@ double methods(float(*funct)(float), float a, float b, float width, string type)
 }
 
 /*Wooo, we made it!  Int main will get all the user input, then use a series of if statements to determine where pointers will point to in order to get evaluate the area under the curve*/
+
+/*********************************************************************
+*Function: Main!  Calling all functions and asking for user input.
+** Description: Get user input, check to make sure it's valid, and pass parameters to functions.
+** Parameters: Nada
+** Pre-Conditions: None
+** Post-Conditions: Woo.
+*********************************************************************/ 
 int main(){
     string play = "yes";
     /*Nested while loop so user can start over"*/
