@@ -19,31 +19,31 @@ using namespace std;
 **Function: f1, f2, f3, f4, f5
 ** Description: Given functions which can be chosen to find the area under.  y=mx+b format.
 ** Parameters: Float x
-** Pre-Conditions: X must be a float
+** Pre-Conditions: X must be a double
 ** Post-Conditions: Return value of y for given x.
 ********************************************************************/ 
-float f1(float x){
-    float y = 2*(pow(x,5))+(pow(x,3))-(10*x)+2;
+double f1(double x){
+    double y = 2*(pow(x,5))+(pow(x,3))-(10*x)+2;
     return y;
 }
 
-float f2(float x){
-    float y = 6*pow(x,2)-x+10;
+double f2(double x){
+    double y = 6*pow(x,2)-x+10;
     return y;
 }
 
-float f3(float x){
-    float y = (5*x)+3;
+double f3(double x){
+    double y = (5*x)+3;
     return y;
 }
 
-float f4(float x){
-    float y=2*(pow(x,3))+120;
+double f4(double x){
+    double y=2*(pow(x,3))+120;
     return y;
 }
 
-float f5(float x){
-    float y=2*(pow(x,2));
+double f5(double x){
+    double y=2*(pow(x,2));
     return y;
 }
 
@@ -53,14 +53,14 @@ float f5(float x){
 **Function: Rectangle Area and Trapezoid Area
 ** Description: Use either trapezoids or rectangles to find the area under a curve using Riemann sums. 
 ** Parameters: Function being used, starting point, ending point, and width of each rectangle/trapezoid
-** Pre-Conditions: All parameters are floats and need a value
+** Pre-Conditions: All parameters are doubles and need a value
 ** Post-Conditions: Return double total, also cout it to terminal
 *********************************************************************/ 
-float rectangleArea(float(*function)(float), float a, float b, float width){
-    float fx;
-    float area;
+double rectangleArea(double(*function)(double), double a, double b, double width){
+    double fx;
+    double area;
     double total;	
-    for (float j = a; j<b; j+=width){
+    for (double j = a; j<b; j+=width){
 	fx = (*function)(j);
 	area = fx*width;
 	total = total+area;
@@ -69,12 +69,12 @@ float rectangleArea(float(*function)(float), float a, float b, float width){
     return total;
 }
 
-float trapezoidArea(float (*function)(float), float a, float b, float width){
-    float fxa;
-    float fxb;
-    float area;
+double trapezoidArea(double (*function)(double), double a, double b, double width){
+    double fxa;
+    double fxb;
+    double area;
     double total;
-	for (float j = a; j<b; j+=width){
+	for (double j = a; j<b; j+=width){
 	    fxa = (*function)(j);
 	    fxb = (*function)(j+width);
 	    area = ((fxa+fxb)/2)*width;
@@ -90,10 +90,10 @@ float trapezoidArea(float (*function)(float), float a, float b, float width){
 **Function:  Run rectangle, trapezoid, or both functions with inputed variables 
 ** Description: Legitimately just passing all variables to the right functions according to user input
 ** Parameters: Function, start point, end point, width of rectangle/trapezoid, and which method user wants to use
-** Pre-Conditions: All parameters must be floats except for type which is a string.
+** Pre-Conditions: All parameters must be doubles except for type which is a string.
 ** Post-Conditions: return double sum
 *********************************************************************/ 
-double methods(float(*funct)(float), float a, float b, float width, string type){
+double methods(double(*funct)(double), double a, double b, double width, string type){
     double sum;
     if (type == "rectangular" || type == "Rectangular" || type == "rectangle" || type == "Rectangle"){
 	sum = rectangleArea(funct, a, b, width);
@@ -127,12 +127,12 @@ int main(){
     while (play == "yes" || play == "Yes"){
 	while(1){
 	    /*Initializing variables*/
-	    float n;
+	    double n;
 	    string type;
-	    float a;
-	    float b;
+	    double a;
+	    double b;
 	    int funct;
-	    float width;
+	    double width;
 	    cout<<"\033[1;34mHow accurate do you want your integral (the area under the curve) to be?  Please enter a number from 1-1000, with 1000 being the most accurate:\33[0m ";
 	    cin>>n;
 	    if (n>1000 || n<0 || cin.fail()){
