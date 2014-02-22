@@ -24,28 +24,23 @@ using namespace std;
 ********************************************************************/ 
 double f1(double x){
     double y = 2*(pow(x,5))+(pow(x,3))-(10*x)+2;
-    return y;
-}
+    return y;}
 
 double f2(double x){
     double y = 6*pow(x,2)-x+10;
-    return y;
-}
+    return y;}
 
 double f3(double x){
     double y = (5*x)+3;
-    return y;
-}
+    return y;}
 
 double f4(double x){
     double y=2*(pow(x,3))+120;
-    return y;
-}
+    return y;}
 
 double f5(double x){
     double y=2*(pow(x,2));
-    return y;
-}
+    return y;}
 
 /*Define functions for finding area through rectangular and trapezoidal methods.  These functions will be passed a pointer to the chosen function, the start point, the end point, and the width, and use those to find the totalarea under the function*/
 
@@ -63,11 +58,9 @@ double rectangleArea(double(*function)(double), double a, double b, double width
     for (double j = a; j<b; j+=width){
 	fx = (*function)(j);
 	area = fx*width;
-	total = total+area;
-    }
+	total = total+area;}
     cout<<total<<endl;
-    return total;
-}
+    return total;}
 
 double trapezoidArea(double (*function)(double), double a, double b, double width){
     double fxa;
@@ -78,11 +71,9 @@ double trapezoidArea(double (*function)(double), double a, double b, double widt
 	    fxa = (*function)(j);
 	    fxb = (*function)(j+width);
 	    area = ((fxa+fxb)/2)*width;
-	    total = total+area;
-	}
+	    total = total+area;}
     cout<<total<<endl;
-    return total;
-}
+    return total;}
 
 /*This function is passed all the same variables as well as the method of integrating that the user chose.  This is where the above functions are run, and the sum is returned*/
 
@@ -95,22 +86,24 @@ double trapezoidArea(double (*function)(double), double a, double b, double widt
 *********************************************************************/ 
 double methods(double(*funct)(double), double a, double b, double width, string type){
     double sum;
+    double sum1;
     if (type == "rectangular" || type == "Rectangular" || type == "rectangle" || type == "Rectangle"){
-	sum = rectangleArea(funct, a, b, width);
-    }
+	sum = rectangleArea(funct, a, b, width);}
     else if (type == "trapezoid" || type == "Trapezoid" || type == "trapezoidal" || type == "Trapezoidal"){
-	sum = trapezoidArea(funct, a, b, width);
-    }
+	sum = trapezoidArea(funct, a, b, width);}
     else if (type =="both" || type=="Both"){
     	sum = rectangleArea(funct, a, b, width);
-	double sum1 = trapezoidArea(funct, a, b, width);
-    }
+	sum1 = trapezoidArea(funct, a, b, width);}
     else{
 	cout<< "\033[1;31mYou did not enter a valid method!  Please try again\33[0m"<<endl;
-	sum = 0;
-    }
-    return sum;
-}
+	sum = 0;}
+    return sum;}
+
+
+/*Check inputs*/
+void checkInput{
+	cin.clear();
+	cin.ignore(1000, '\n');}
 
 /*Wooo, we made it!  Int main will get all the user input, then use a series of if statements to determine where pointers will point to in order to get evaluate the area under the curve*/
 
@@ -136,16 +129,14 @@ int main(){
 	    cout<<"\033[1;34mHow accurate do you want your integral (the area under the curve) to be?  Please enter a number from 1-1000, with 1000 being the most accurate:\33[0m ";
 	    cin>>n;
 	    if (n>1000 || n<0 || cin.fail()){
-		cin.clear();
-		cin.ignore(10000, '\n');
+		checkInput();
 		cout<<endl<<"\033[1;31mSorry! You did not input a number between 1 and 1000.  Please try again!\033[0m\n"<<endl;
 		break;
 	    }	/*This will be the number of rectangles/trapezoids the area under the curve will be broken up doubleo*/
 	    cout<<"\033[1;34mWould you like to use the trapezoidal method, rectangular method, or both to find the integral? (trapezoidal will be more accurate)\33[0m ";
 	    cin>>type;
 	    if (cin.fail()){
-	    	cin.clear();
-		cin.ignore(1000, '\n');
+	    	checkInput();
 		cout<<endl<<"\033[1;31Sorry! You did not input a valid method.  Please try again!\33[0m"<<endl;
 		break;
 	    }
@@ -154,8 +145,7 @@ int main(){
 	    cin>>a; /*Starting point*/
 	    cin>>b; /*Ending point*/
 	    if (a>1000 || b>1001 || cin.fail()){
-		cin.clear();
-		cin.ignore(10000, '\n');
+		checkInput();
 		cout<<"\033[1;31mSorry! The number you input is too high or too low.  Please select a number between 0 and 4000\033[0m"<<endl;
 		break;
 	    }
