@@ -101,7 +101,7 @@ double methods(double(*funct)(double), double a, double b, double width, string 
 
 
 /*Check inputs*/
-void checkInput{
+void checkInput(){
 	cin.clear();
 	cin.ignore(1000, '\n');}
 
@@ -168,6 +168,7 @@ int main(){
 	    if (funct == 5){
 		double answer = methods(&f5, a, b, width, type);
 	    }
+	    cout<<"FUNCT"<<&f1<<endl;
 	    cout<<"\033[1;34mWould you like to play again? Yes/no\33[0m  "<<endl;
 	    cin>>play;
 	    if (play != "yes" && play !="Yes"){
